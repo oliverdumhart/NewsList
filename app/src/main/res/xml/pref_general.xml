@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <EditTextPreference
+        android:key="@string/settings_url_key"
+        android:title="@string/settings_url_title"
+        android:defaultValue="@string/settings_url_default"
+        app:useSimpleSummaryProvider="true"
+        />
+    <CheckBoxPreference
+        android:key="@string/settings_display_images_key"
+        android:title="@string/settings_display_images_title"
+        android:defaultValue="@bool/pref_display_images_default"
+        android:summaryOn="@string/pref_display_images_on"
+        android:summaryOff="@string/pref_display_images_off"
+        />
+    <CheckBoxPreference
+        android:key="@string/settings_download_images_key"
+        android:title="@string/settings_download_images_title"
+        android:defaultValue="@bool/pref_download_images_in_the_background_default"
+        android:summaryOn="@string/pref_download_images_on"
+        android:summaryOff="@string/pref_download_images_off"
+        />
+
+</PreferenceScreen>
