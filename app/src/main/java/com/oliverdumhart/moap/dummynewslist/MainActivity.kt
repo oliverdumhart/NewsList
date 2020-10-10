@@ -10,21 +10,25 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 
-class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener{
+class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
     private val viewModel: NewsListViewModel by viewModels()
     private lateinit var prefs: SharedPreferences
     private lateinit var url: String
+    private lateinit var adapter: NewsItemAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val adapter = NewsItemAdapter(NewsItemAdapter.NewsItemClickListener { item ->
+        adapter = NewsItemAdapter(NewsItemAdapter.NewsItemClickListener { item ->
             val intent = Intent(this@MainActivity, DetailActivity::class.java)
             intent.putExtra(DetailActivity.ITEM_EXTRA, item)
             startActivity(intent)
         })
-        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
-        recyclerView.adapter = adapter
+
+        findViewById<RecyclerView>(R.id.recycler_view).apply {
+            setHasFixedSize(true)
+            this.adapter = this@MainActivity.adapter
+        }
 
         viewModel.newsList.observe(this) { newsList ->
             if (newsList != null) {
@@ -55,13 +59,13 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         else -> super.onOptionsItemSelected(item)
     }
 
-    fun showSettings(){
+    fun showSettings() {
         startActivity(Intent(this, SettingsActivity::class.java))
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        if(key == getString(R.string.settings_url_key)){
-            sharedPreferences?.let{
+        if (key == getString(R.string.settings_url_key)) {
+            sharedPreferences?.let {
                 url = it.getString(key, getString(R.string.settings_url_default))!!
                 viewModel.loadNews(url)
             }
