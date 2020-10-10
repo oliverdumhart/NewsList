@@ -65,11 +65,11 @@ class NewsXmlParser {
                 "title" -> title = readTextOfTag("title", parser)
                 "description" -> {
                     val text = readTextOfTag("description", parser)
-                    val values = Regex("(<img.*/>)(.*)").find(text)?.groupValues ?: listOf<String>()
-                    if(values.size > 2) {
+                    val values = Regex("<img src=\"(.*)\" />(.*)").find(text)?.groupValues ?: listOf<String>()
+                    if(values.size >= 2) {
                         image = values[1]
                     }
-                    if(values.size > 3) {
+                    if(values.size >= 3) {
                         description = values[2]
                     }
                 }
