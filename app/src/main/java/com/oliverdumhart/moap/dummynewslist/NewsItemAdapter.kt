@@ -2,9 +2,11 @@ package com.oliverdumhart.moap.dummynewslist
 
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewConfiguration
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
@@ -61,21 +63,20 @@ class NewsItemAdapter(private val transitionName: String, private val clickListe
             }
         }
 
-        override fun onClick(view: View) {
-            val item = items[adapterPosition]
-            clickListener.onNewsItemClicked(item)
-        }
-
         init {
             title = itemView.findViewById(R.id.title)
             image = itemView.findViewById(R.id.image)
             author = itemView.findViewById(R.id.author)
             date = itemView.findViewById(R.id.date)
-            itemView.setOnClickListener(this)
+            ViewCompat.setTransitionName(image, transitionName)
+            itemView.setOnClickListener {
+                val item = items[adapterPosition]
+                clickListener.onNewsItemClicked(item, image)
+            }
         }
     }
 
-    class NewsItemClickListener(val clickListener: (item: NewsItem) -> Unit) {
-        fun onNewsItemClicked(item: NewsItem) = clickListener(item)
+    class NewsItemClickListener(val clickListener: (item: NewsItem, imageView: ImageView) -> Unit) {
+        fun onNewsItemClicked(item: NewsItem, imageView: ImageView) = clickListener(item, imageView)
     }
 }

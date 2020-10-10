@@ -33,6 +33,13 @@ class DetailActivity : AppCompatActivity() {
             val imageView = findViewById<ImageView>(R.id.image)
             val fullStoryButton = findViewById<Button>(R.id.full_story_button)
             val item: NewsItem? = intent.getParcelableExtra(ITEM_EXTRA)
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                intent.getStringExtra(EXTRA_TRANSITION_NAME)?.let {
+                    ViewCompat.setTransitionName(imageView, it)
+                }
+            }
+
             if (item != null) {
                 viewModel.updateNewsItem(item)
             } else {
@@ -72,5 +79,6 @@ class DetailActivity : AppCompatActivity() {
 
     companion object {
         const val ITEM_EXTRA = "ITEM_EXTRA"
+        const val EXTRA_TRANSITION_NAME = "EXTRA_TRANSITION_NAME"
     }
 }

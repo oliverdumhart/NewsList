@@ -2,13 +2,19 @@ package com.oliverdumhart.moap.dummynewslist
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.view.ViewCompat
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
+import com.oliverdumhart.moap.dummynewslist.DetailActivity.Companion.EXTRA_TRANSITION_NAME
+import com.oliverdumhart.moap.dummynewslist.entities.NewsItem
 
 class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
     private val viewModel: NewsListViewModel by viewModels()
@@ -19,10 +25,8 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        adapter = NewsItemAdapter(NewsItemAdapter.NewsItemClickListener { item ->
-            val intent = Intent(this@MainActivity, DetailActivity::class.java)
-            intent.putExtra(DetailActivity.ITEM_EXTRA, item)
-            startActivity(intent)
+        adapter = NewsItemAdapter(EXTRA_TRANSITION_NAME, NewsItemAdapter.NewsItemClickListener{ item, imageView ->
+            showDetailActivity(item, imageView)
         })
 
         findViewById<RecyclerView>(R.id.recycler_view).apply {
@@ -40,6 +44,19 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         url = prefs.getString(getString(R.string.settings_url_key), getString(R.string.settings_url_default))!!
         viewModel.loadNews(url)
         prefs.registerOnSharedPreferenceChangeListener(this)
+    }
+
+    private fun showDetailActivity(item: NewsItem, imageView: ImageView) {
+        val intent = Intent(this@MainActivity, DetailActivity::class.java)
+        intent.putExtra(DetailActivity.ITEM_EXTRA, item)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            intent.putExtra(EXTRA_TRANSITION_NAME, ViewCompat.getTransitionName(imageView))
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, imageView, ViewCompat.getTransitionName(imageView)!!)
+            startActivity(intent, options.toBundle())
+        } else {
+            startActivity(intent)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
