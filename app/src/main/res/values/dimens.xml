@@ -4,4 +4,5 @@
     <dimen name="spacing_detail">8dp</dimen>
     <dimen name="subtitle">12sp</dimen>
     <dimen name="title">20sp</dimen>
+    <dimen name="caption_spacing_start">50dp</dimen>
 </resources>

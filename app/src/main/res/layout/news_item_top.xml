@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@color/colorAccent" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/caption_spacing_start"
+        android:layout_marginBottom="@dimen/spacing"
+        android:layout_marginEnd="@dimen/spacing"
+        android:background="@color/white_opaque"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing"
+        app:layout_constraintBottom_toBottomOf="@+id/image"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginLeft="@dimen/caption_spacing_start"
+        android:layout_marginRight="@dimen/spacing">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/title"
+            tools:layout_editor_absoluteX="66dp"
+            tools:layout_editor_absoluteY="16dp"
+            tools:text="This is the title" />
+
+        <TextView
+            android:id="@+id/author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/subtitle"
+            tools:layout_editor_absoluteX="66dp"
+            tools:layout_editor_absoluteY="43dp"
+            tools:text="Dale Chaplin" />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/subtitle"
+            tools:layout_editor_absoluteX="66dp"
+            tools:layout_editor_absoluteY="61dp"
+            tools:text="September 12, 2017 21:35" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

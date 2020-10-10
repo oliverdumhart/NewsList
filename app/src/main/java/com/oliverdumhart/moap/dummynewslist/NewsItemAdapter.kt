@@ -11,12 +11,23 @@ import com.bumptech.glide.Glide
 import com.oliverdumhart.moap.dummynewslist.NewsItemAdapter.NewsItemViewHolder
 import com.oliverdumhart.moap.dummynewslist.entities.NewsItem
 import com.oliverdumhart.moap.dummynewslist.extensions.toString
+import java.lang.IllegalArgumentException
 
-class NewsItemAdapter(private val clickListener: NewsItemClickListener, private var items: List<NewsItem> = listOf()) : RecyclerView.Adapter<NewsItemViewHolder>() {
+class NewsItemAdapter(private val transitionName: String, private val clickListener: NewsItemClickListener, private var items: List<NewsItem> = listOf()) : RecyclerView.Adapter<NewsItemViewHolder>() {
+
+    companion object {
+        private val VIEW_TYPE_TOP = 0
+        private val VIEW_TYPE_DEFAULT = 1
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.news_item, parent, false)
+        val layout = when (viewType) {
+            VIEW_TYPE_DEFAULT -> R.layout.news_item
+            VIEW_TYPE_TOP -> R.layout.news_item_top
+            else -> throw IllegalArgumentException("No valid viewType specified")
+        }
+        val view = inflater.inflate(layout, parent, false)
         return NewsItemViewHolder(view)
     }
 
@@ -28,12 +39,14 @@ class NewsItemAdapter(private val clickListener: NewsItemClickListener, private 
         return items.size
     }
 
+    override fun getItemViewType(position: Int): Int = (if (position == 0) VIEW_TYPE_TOP else VIEW_TYPE_DEFAULT)
+
     fun updateList(newsList: List<NewsItem>) {
         items = newsList
         notifyDataSetChanged()
     }
 
-    inner class NewsItemViewHolder(itemView: View) : ViewHolder(itemView), View.OnClickListener {
+    inner class NewsItemViewHolder(itemView: View) : ViewHolder(itemView) {
         private val title: TextView
         private val image: ImageView
         private val author: TextView
