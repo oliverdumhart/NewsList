@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         val intent = Intent(this@MainActivity, DetailActivity::class.java)
         intent.putExtra(DetailActivity.ITEM_EXTRA, item)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+        if (viewModel.showImages.value != false && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             intent.putExtra(EXTRA_TRANSITION_NAME, ViewCompat.getTransitionName(imageView))
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, imageView, ViewCompat.getTransitionName(imageView)!!)
             startActivity(intent, options.toBundle())
