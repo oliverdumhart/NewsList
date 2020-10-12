@@ -15,4 +15,6 @@
     <string name="settings_url_default" translatable="false">https://www.engadget.com/rss.xml</string>
     <string name="button_full_story">Full Story</string>
     <string name="detail_extra_error">Opening the News Item failed!</string>
+    <string name="detail_screen_name">Details</string>
+    <string name="settings_screen_name">Settings</string>
 </resources>
