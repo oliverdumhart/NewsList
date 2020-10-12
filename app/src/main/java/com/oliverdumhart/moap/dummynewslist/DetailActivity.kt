@@ -5,15 +5,16 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
+import androidx.preference.PreferenceManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.oliverdumhart.moap.dummynewslist.entities.NewsItem
 import com.oliverdumhart.moap.dummynewslist.extensions.toString
 import java.text.SimpleDateFormat
@@ -24,6 +25,7 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
+
         if (intent.hasExtra(ITEM_EXTRA)) {
             val titleTextView = findViewById<TextView>(R.id.title)
             val descriptionTextView = findViewById<TextView>(R.id.description)
@@ -34,7 +36,11 @@ class DetailActivity : AppCompatActivity() {
             val fullStoryButton = findViewById<Button>(R.id.full_story_button)
             val item: NewsItem? = intent.getParcelableExtra(ITEM_EXTRA)
 
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+            val showImages = prefs.getBoolean(getString(R.string.settings_display_images_key), resources.getBoolean(R.bool.pref_display_images_default))
+            viewModel.setShowImages(showImages)
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 intent.getStringExtra(EXTRA_TRANSITION_NAME)?.let {
                     ViewCompat.setTransitionName(imageView, it)
                 }
@@ -55,7 +61,9 @@ class DetailActivity : AppCompatActivity() {
                 publicationDateTextView.text = item.publicationDate?.toString("MMM dd, yyyy HH:mm")
                         ?: ""
                 keywordsTextView.text = item.keywords?.joinToString(", ") ?: ""
-                Glide.with(imageView.context).load(item.image).into(imageView)
+                if (imageView.isVisible) {
+                    Glide.with(imageView.context).load(item.image).apply(RequestOptions().placeholder(R.drawable.loading_animation)).into(imageView)
+                }
             })
 
             viewModel.eventShowLink.observe(this, { link ->
@@ -63,6 +71,10 @@ class DetailActivity : AppCompatActivity() {
                     openLink(link)
                     viewModel.eventShowLinkComplete()
                 }
+            })
+
+            viewModel.showImages.observe(this, { showImages ->
+                imageView.isVisible = showImages
             })
         } else {
             showErrorMessage()

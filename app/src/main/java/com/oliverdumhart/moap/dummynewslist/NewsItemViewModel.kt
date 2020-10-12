@@ -18,11 +18,19 @@ class NewsItemViewModel : ViewModel() {
         _eventShowLink.value = newsItem.value?.link ?: ""
     }
 
+    private val _showImages = MutableLiveData<Boolean>()
+    val showImages: LiveData<Boolean>
+        get() = _showImages
+
+    fun setShowImages(value: Boolean){
+        _showImages.value = value
+    }
+
     private val _eventShowLink = MutableLiveData("")
     val eventShowLink: LiveData<String>
         get() = _eventShowLink
 
-    fun eventShowLinkComplete(){
+    fun eventShowLinkComplete() {
         _eventShowLink.value = ""
     }
 }

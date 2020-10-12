@@ -2,25 +2,39 @@ package com.oliverdumhart.moap.dummynewslist
 
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewConfiguration
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.view.ViewCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.oliverdumhart.moap.dummynewslist.NewsItemAdapter.NewsItemViewHolder
 import com.oliverdumhart.moap.dummynewslist.entities.NewsItem
 import com.oliverdumhart.moap.dummynewslist.extensions.toString
-import java.lang.IllegalArgumentException
 
-class NewsItemAdapter(private val transitionName: String, private val clickListener: NewsItemClickListener, private var items: List<NewsItem> = listOf()) : RecyclerView.Adapter<NewsItemViewHolder>() {
+class NewsItemAdapter(
+        private val transitionName: String,
+        private val clickListener: NewsItemClickListener,
+        private var items: List<NewsItem> = listOf()
+) : RecyclerView.Adapter<NewsItemViewHolder>() {
 
     companion object {
         private val VIEW_TYPE_TOP = 0
         private val VIEW_TYPE_DEFAULT = 1
     }
+
+    private var _showImages = false
+
+    var showImages
+        get() = _showImages
+        set(value) {
+            _showImages = value
+            notifyDataSetChanged()
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -58,8 +72,11 @@ class NewsItemAdapter(private val transitionName: String, private val clickListe
             title.text = item.title
             author.text = item.author
             date.text = item.publicationDate?.toString("MMM dd, yyyy, HH:mm") ?: ""
-            item.image?.let {
-                Glide.with(image.context).load(it).into(image)
+            image.isVisible = showImages
+            if (showImages) {
+                item.image?.let {
+                    Glide.with(image.context).load(it).apply(RequestOptions().placeholder(R.drawable.loading_animation)).into(image)
+                }
             }
         }
 

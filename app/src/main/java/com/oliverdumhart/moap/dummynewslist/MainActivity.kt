@@ -11,6 +11,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
+import androidx.lifecycle.Observer
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.oliverdumhart.moap.dummynewslist.DetailActivity.Companion.EXTRA_TRANSITION_NAME
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        adapter = NewsItemAdapter(EXTRA_TRANSITION_NAME, NewsItemAdapter.NewsItemClickListener{ item, imageView ->
+        adapter = NewsItemAdapter(EXTRA_TRANSITION_NAME, NewsItemAdapter.NewsItemClickListener { item, imageView ->
             showDetailActivity(item, imageView)
         })
 
@@ -42,8 +43,14 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this)
         url = prefs.getString(getString(R.string.settings_url_key), getString(R.string.settings_url_default))!!
+        val showImages = prefs.getBoolean(getString(R.string.settings_display_images_key), resources.getBoolean(R.bool.pref_display_images_default))
         viewModel.loadNews(url)
+        viewModel.setShowImages(showImages)
         prefs.registerOnSharedPreferenceChangeListener(this)
+
+        viewModel.showImages.observe(this, {
+            adapter.showImages = it
+        })
     }
 
     private fun showDetailActivity(item: NewsItem, imageView: ImageView) {
@@ -81,10 +88,18 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        if (key == getString(R.string.settings_url_key)) {
-            sharedPreferences?.let {
-                url = it.getString(key, getString(R.string.settings_url_default))!!
-                viewModel.loadNews(url)
+        when (key) {
+            getString(R.string.settings_url_key) -> {
+                sharedPreferences?.let {
+                    url = it.getString(key, getString(R.string.settings_url_default))!!
+                    viewModel.loadNews(url)
+                }
+            }
+            getString(R.string.settings_display_images_key) -> {
+                sharedPreferences?.let {
+                    val showImages = it.getBoolean(key, resources.getBoolean(R.bool.pref_display_images_default))
+                    viewModel.setShowImages(showImages)
+                }
             }
         }
     }
