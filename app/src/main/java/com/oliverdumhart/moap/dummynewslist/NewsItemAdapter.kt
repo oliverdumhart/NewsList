@@ -81,7 +81,7 @@ class NewsItemAdapter(
         }
 
         init {
-            title = itemView.findViewById(R.id.title)
+            title = itemView.findViewById(R.id.titleTextView)
             image = itemView.findViewById(R.id.image)
             author = itemView.findViewById(R.id.author)
             date = itemView.findViewById(R.id.date)

@@ -5,25 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.oliverdumhart.moap.dummynewslist.entities.NewsItem
 
-class NewsItemViewModel : ViewModel() {
-    private val _newsItem = MutableLiveData<NewsItem>()
-    val newsItem: LiveData<NewsItem>
-        get() = _newsItem
-
-    fun updateNewsItem(newsItem: NewsItem) {
-        _newsItem.value = newsItem
-    }
+class NewsItemViewModel(val newsItem: NewsItem, val showImages: Boolean) : ViewModel() {
 
     fun fullStoryButtonClicked() {
-        _eventShowLink.value = newsItem.value?.link ?: ""
-    }
-
-    private val _showImages = MutableLiveData<Boolean>()
-    val showImages: LiveData<Boolean>
-        get() = _showImages
-
-    fun setShowImages(value: Boolean){
-        _showImages.value = value
+        _eventShowLink.value = newsItem.link ?: ""
     }
 
     private val _eventShowLink = MutableLiveData("")
