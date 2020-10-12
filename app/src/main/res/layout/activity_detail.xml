@@ -8,7 +8,17 @@
     android:orientation="vertical"
     tools:context=".detail.DetailActivity">
 
-    <include layout="@layout/news_item_top" />
+    <ViewStub
+        android:id="@+id/header_big"
+        android:layout="@layout/news_item_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ViewStub
+        android:id="@+id/header_small"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout="@layout/news_item" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -36,7 +46,7 @@
                 android:id="@+id/full_story_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/button_full_story"/>
+                android:text="@string/button_full_story" />
 
         </LinearLayout>
     </ScrollView>

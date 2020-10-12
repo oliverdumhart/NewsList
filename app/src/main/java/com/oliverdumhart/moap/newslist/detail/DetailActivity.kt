@@ -4,9 +4,12 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import com.bumptech.glide.Glide
@@ -15,7 +18,12 @@ import com.oliverdumhart.moap.newslist.R
 import com.oliverdumhart.moap.newslist.entities.NewsItem
 import com.oliverdumhart.moap.newslist.extensions.toString
 import kotlinx.android.synthetic.main.activity_detail.*
+import kotlinx.android.synthetic.main.news_item.*
 import kotlinx.android.synthetic.main.news_item_top.*
+import kotlinx.android.synthetic.main.news_item_top.author
+import kotlinx.android.synthetic.main.news_item_top.date
+import kotlinx.android.synthetic.main.news_item_top.image
+import kotlinx.android.synthetic.main.news_item_top.titleTextView
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var viewModel: DetailViewModel
@@ -25,6 +33,17 @@ class DetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_detail)
 
         setupViewModel()
+
+        if (viewModel.showImages) {
+            header_big.isVisible = true
+        } else {
+            header_small.isVisible = true
+        }
+
+        val titleTextView = findViewById<TextView>(R.id.titleTextView)
+        val author = findViewById<TextView>(R.id.author)
+        val date = findViewById<TextView>(R.id.date)
+        val image = findViewById<ImageView>(R.id.image)
 
         if (viewModel.showImages && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             intent.getStringExtra(EXTRA_TRANSITION_NAME)?.let {
@@ -36,13 +55,15 @@ class DetailActivity : AppCompatActivity() {
 
         viewModel.newsItem.let { item ->
             titleTextView.text = item.title ?: ""
-            description.text = item.description ?: ""
             author.text = item.author ?: ""
             date.text = item.publicationDate?.toString("MMM dd, yyyy HH:mm")
                     ?: ""
+            description.text = item.description ?: ""
             keywords.text = item.keywords?.joinToString(", ") ?: ""
             if (viewModel.showImages) {
                 Glide.with(image.context).load(item.image).apply(RequestOptions().placeholder(R.drawable.loading_animation)).into(image)
+            }else{
+                image.isVisible = false
             }
         }
 
