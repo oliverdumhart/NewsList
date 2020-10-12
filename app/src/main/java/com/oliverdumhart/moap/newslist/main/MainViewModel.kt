@@ -8,7 +8,7 @@ import com.oliverdumhart.moap.newslist.services.NewsApiService
 import com.oliverdumhart.moap.newslist.entities.NewsItem
 import kotlinx.coroutines.launch
 
-class NewsListViewModel: ViewModel() {
+class MainViewModel: ViewModel() {
 
     private val _newsList = MutableLiveData<List<NewsItem>>()
 

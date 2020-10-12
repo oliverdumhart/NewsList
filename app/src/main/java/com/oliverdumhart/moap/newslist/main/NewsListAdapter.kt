@@ -12,11 +12,11 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.oliverdumhart.moap.newslist.R
-import com.oliverdumhart.moap.newslist.main.NewsItemAdapter.NewsItemViewHolder
+import com.oliverdumhart.moap.newslist.main.NewsListAdapter.NewsItemViewHolder
 import com.oliverdumhart.moap.newslist.entities.NewsItem
 import com.oliverdumhart.moap.newslist.extensions.toString
 
-class NewsItemAdapter(
+class NewsListAdapter(
         private val transitionName: String,
         private val clickListener: NewsItemClickListener,
         private var items: List<NewsItem> = listOf()

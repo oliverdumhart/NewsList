@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.news_item_top.*
 
 class DetailActivity : AppCompatActivity() {
-    private lateinit var viewModel: NewsItemViewModel
+    private lateinit var viewModel: DetailViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +26,7 @@ class DetailActivity : AppCompatActivity() {
 
         setupViewModel()
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (viewModel.showImages && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             intent.getStringExtra(EXTRA_TRANSITION_NAME)?.let {
                 ViewCompat.setTransitionName(image, it)
             }
@@ -62,7 +62,7 @@ class DetailActivity : AppCompatActivity() {
                 val prefs = PreferenceManager.getDefaultSharedPreferences(this)
                 val showImages = prefs.getBoolean(getString(R.string.settings_display_images_key), resources.getBoolean(R.bool.pref_display_images_default))
 
-                viewModel = ViewModelProvider(this, NewsItemViewModelFactory(item, showImages)).get(NewsItemViewModel::class.java)
+                viewModel = ViewModelProvider(this, DetailViewModelFactory(item, showImages)).get(DetailViewModel::class.java)
             } else {
                 showErrorMessage()
             }

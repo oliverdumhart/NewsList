@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.oliverdumhart.moap.newslist.entities.NewsItem
 
-class NewsItemViewModel(val newsItem: NewsItem, val showImages: Boolean) : ViewModel() {
+class DetailViewModel(val newsItem: NewsItem, val showImages: Boolean) : ViewModel() {
 
     fun fullStoryButtonClicked() {
         _eventShowLink.value = newsItem.link ?: ""

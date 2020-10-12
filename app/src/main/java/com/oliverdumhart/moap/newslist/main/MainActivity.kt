@@ -20,15 +20,15 @@ import com.oliverdumhart.moap.newslist.entities.NewsItem
 import com.oliverdumhart.moap.newslist.settings.SettingsActivity
 
 class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
-    private val viewModel: NewsListViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModels()
     private lateinit var prefs: SharedPreferences
     private lateinit var url: String
-    private lateinit var adapter: NewsItemAdapter
+    private lateinit var adapter: NewsListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        adapter = NewsItemAdapter(EXTRA_TRANSITION_NAME, NewsItemAdapter.NewsItemClickListener { item, imageView ->
+        adapter = NewsListAdapter(EXTRA_TRANSITION_NAME, NewsListAdapter.NewsItemClickListener { item, imageView ->
             showDetailActivity(item, imageView)
         })
 
