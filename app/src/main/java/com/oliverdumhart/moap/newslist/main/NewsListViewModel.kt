@@ -1,9 +1,10 @@
-package com.oliverdumhart.moap.newslist
+package com.oliverdumhart.moap.newslist.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.oliverdumhart.moap.newslist.services.NewsApiService
 import com.oliverdumhart.moap.newslist.entities.NewsItem
 import kotlinx.coroutines.launch
 

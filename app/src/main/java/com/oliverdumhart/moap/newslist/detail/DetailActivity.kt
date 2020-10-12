@@ -1,4 +1,4 @@
-package com.oliverdumhart.moap.newslist
+package com.oliverdumhart.moap.newslist.detail
 
 import android.content.Intent
 import android.net.Uri
@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.oliverdumhart.moap.newslist.R
 import com.oliverdumhart.moap.newslist.entities.NewsItem
 import com.oliverdumhart.moap.newslist.extensions.toString
 import kotlinx.android.synthetic.main.activity_detail.*

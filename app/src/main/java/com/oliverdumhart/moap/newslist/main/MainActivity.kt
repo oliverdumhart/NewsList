@@ -1,4 +1,4 @@
-package com.oliverdumhart.moap.newslist
+package com.oliverdumhart.moap.newslist.main
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -13,8 +13,11 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
-import com.oliverdumhart.moap.newslist.DetailActivity.Companion.EXTRA_TRANSITION_NAME
+import com.oliverdumhart.moap.newslist.R
+import com.oliverdumhart.moap.newslist.detail.DetailActivity
+import com.oliverdumhart.moap.newslist.detail.DetailActivity.Companion.EXTRA_TRANSITION_NAME
 import com.oliverdumhart.moap.newslist.entities.NewsItem
+import com.oliverdumhart.moap.newslist.settings.SettingsActivity
 
 class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
     private val viewModel: NewsListViewModel by viewModels()

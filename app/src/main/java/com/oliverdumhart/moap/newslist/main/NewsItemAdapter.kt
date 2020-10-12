@@ -1,4 +1,4 @@
-package com.oliverdumhart.moap.newslist
+package com.oliverdumhart.moap.newslist.main
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.oliverdumhart.moap.newslist.NewsItemAdapter.NewsItemViewHolder
+import com.oliverdumhart.moap.newslist.R
+import com.oliverdumhart.moap.newslist.main.NewsItemAdapter.NewsItemViewHolder
 import com.oliverdumhart.moap.newslist.entities.NewsItem
 import com.oliverdumhart.moap.newslist.extensions.toString
 

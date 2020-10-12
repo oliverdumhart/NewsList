@@ -1,4 +1,4 @@
-package com.oliverdumhart.moap.newslist
+package com.oliverdumhart.moap.newslist.services
 
 import android.util.Xml
 import com.oliverdumhart.moap.newslist.entities.NewsItem

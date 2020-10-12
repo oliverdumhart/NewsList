@@ -11,19 +11,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.oliverdumhart.moap.newslist.SettingsActivity" android:parentActivityName="com.oliverdumhart.moap.newslist.MainActivity">
+        <activity android:name="com.oliverdumhart.moap.newslist.settings.SettingsActivity" android:parentActivityName="com.oliverdumhart.moap.newslist.main.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.oliverdumhart.moap.newslist.MainActivity"
+                android:value="com.oliverdumhart.moap.newslist.main.MainActivity"
                 />
         </activity>
-        <activity android:name="com.oliverdumhart.moap.newslist.DetailActivity" android:parentActivityName="com.oliverdumhart.moap.newslist.MainActivity" >
+        <activity android:name="com.oliverdumhart.moap.newslist.detail.DetailActivity" android:parentActivityName="com.oliverdumhart.moap.newslist.main.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.oliverdumhart.moap.newslist.MainActivity"
+                android:value="com.oliverdumhart.moap.newslist.main.MainActivity"
                 />
         </activity>
-        <activity android:name="com.oliverdumhart.moap.newslist.MainActivity" android:launchMode="singleTop">
+        <activity android:name="com.oliverdumhart.moap.newslist.main.MainActivity" android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

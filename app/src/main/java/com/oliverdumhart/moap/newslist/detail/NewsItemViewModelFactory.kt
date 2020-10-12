@@ -1,4 +1,4 @@
-package com.oliverdumhart.moap.newslist
+package com.oliverdumhart.moap.newslist.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

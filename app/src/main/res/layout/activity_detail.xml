@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_margin="@dimen/spacing_detail"
     android:orientation="vertical"
-    tools:context=".DetailActivity">
+    tools:context=".detail.DetailActivity">
 
     <include layout="@layout/news_item_top" />
 
