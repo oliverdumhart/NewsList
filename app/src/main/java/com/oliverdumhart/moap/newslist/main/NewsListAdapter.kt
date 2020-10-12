@@ -23,8 +23,8 @@ class NewsListAdapter(
 ) : RecyclerView.Adapter<NewsItemViewHolder>() {
 
     companion object {
-        private val VIEW_TYPE_TOP = 0
-        private val VIEW_TYPE_DEFAULT = 1
+        private const val VIEW_TYPE_TOP = 0
+        private const val VIEW_TYPE_DEFAULT = 1
     }
 
     private var _showImages = false
@@ -55,7 +55,7 @@ class NewsListAdapter(
         return items.size
     }
 
-    override fun getItemViewType(position: Int): Int = (if (position == 0) VIEW_TYPE_TOP else VIEW_TYPE_DEFAULT)
+    override fun getItemViewType(position: Int): Int = (if (position == 0 && showImages) VIEW_TYPE_TOP else VIEW_TYPE_DEFAULT)
 
     fun updateList(newsList: List<NewsItem>) {
         items = newsList
