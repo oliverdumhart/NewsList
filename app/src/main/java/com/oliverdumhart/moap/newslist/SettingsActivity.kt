@@ -1,4 +1,4 @@
-package com.oliverdumhart.moap.dummynewslist
+package com.oliverdumhart.moap.newslist
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

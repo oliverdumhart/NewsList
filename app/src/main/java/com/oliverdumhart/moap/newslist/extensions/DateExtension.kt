@@ -1,4 +1,4 @@
-package com.oliverdumhart.moap.dummynewslist.extensions
+package com.oliverdumhart.moap.newslist.extensions
 
 import java.lang.IllegalArgumentException
 import java.lang.NullPointerException

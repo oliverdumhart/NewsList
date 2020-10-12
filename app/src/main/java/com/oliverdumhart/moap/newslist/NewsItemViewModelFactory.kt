@@ -1,9 +1,8 @@
-package com.oliverdumhart.moap.dummynewslist
+package com.oliverdumhart.moap.newslist
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.oliverdumhart.moap.dummynewslist.entities.NewsItem
+import com.oliverdumhart.moap.newslist.entities.NewsItem
 
 class NewsItemViewModelFactory(
         private val newsItem: NewsItem,

@@ -1,9 +1,9 @@
-package com.oliverdumhart.moap.dummynewslist
+package com.oliverdumhart.moap.newslist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.oliverdumhart.moap.dummynewslist.entities.NewsItem
+import com.oliverdumhart.moap.newslist.entities.NewsItem
 
 class NewsItemViewModel(val newsItem: NewsItem, val showImages: Boolean) : ViewModel() {
 

@@ -1,15 +1,13 @@
-package com.oliverdumhart.moap.dummynewslist
+package com.oliverdumhart.moap.newslist
 
 import android.util.Xml
-import com.oliverdumhart.moap.dummynewslist.entities.NewsItem
+import com.oliverdumhart.moap.newslist.entities.NewsItem
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
 import java.io.IOException
 import java.io.InputStream
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.HashMap
 
 class NewsXmlParser {
 

@@ -1,4 +1,4 @@
-package com.oliverdumhart.moap.dummynewslist
+package com.oliverdumhart.moap.newslist
 
 import android.os.Bundle
 import androidx.preference.PreferenceFragmentCompat

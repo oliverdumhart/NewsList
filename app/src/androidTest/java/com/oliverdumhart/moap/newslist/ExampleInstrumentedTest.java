@@ -1,4 +1,4 @@
-package com.oliverdumhart.moap.dummynewslist;
+package com.oliverdumhart.moap.newslist;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.oliverdumhart.moap.dummynewslist", appContext.getPackageName());
+        assertEquals("com.oliverdumhart.moap.newslist", appContext.getPackageName());
     }
 }

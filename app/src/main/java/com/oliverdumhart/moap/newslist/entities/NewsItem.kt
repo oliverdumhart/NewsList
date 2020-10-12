@@ -1,4 +1,4 @@
-package com.oliverdumhart.moap.dummynewslist.entities
+package com.oliverdumhart.moap.newslist.entities
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

@@ -1,7 +1,7 @@
-package com.oliverdumhart.moap.dummynewslist
+package com.oliverdumhart.moap.newslist
 
 import android.util.Log
-import com.oliverdumhart.moap.dummynewslist.entities.NewsItem
+import com.oliverdumhart.moap.newslist.entities.NewsItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.FileNotFoundException

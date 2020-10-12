@@ -1,10 +1,9 @@
-package com.oliverdumhart.moap.dummynewslist
+package com.oliverdumhart.moap.newslist
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
@@ -12,9 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.oliverdumhart.moap.dummynewslist.NewsItemAdapter.NewsItemViewHolder
-import com.oliverdumhart.moap.dummynewslist.entities.NewsItem
-import com.oliverdumhart.moap.dummynewslist.extensions.toString
+import com.oliverdumhart.moap.newslist.NewsItemAdapter.NewsItemViewHolder
+import com.oliverdumhart.moap.newslist.entities.NewsItem
+import com.oliverdumhart.moap.newslist.extensions.toString
 
 class NewsItemAdapter(
         private val transitionName: String,
