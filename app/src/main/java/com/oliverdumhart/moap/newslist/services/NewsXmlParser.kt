@@ -36,7 +36,9 @@ class NewsXmlParser {
             }
             // Starts by looking for the item tag
             if (parser.name == "item") {
-                entries.add(readItem(parser))
+                readItem(parser)?.let {
+                    entries.add(it)
+                }
             } else {
                 skip(parser)
             }
@@ -45,7 +47,7 @@ class NewsXmlParser {
     }
 
     @Throws(XmlPullParserException::class, IOException::class)
-    private fun readItem(parser: XmlPullParser): NewsItem {
+    private fun readItem(parser: XmlPullParser): NewsItem? {
         parser.require(XmlPullParser.START_TAG, ns, "item")
         var title: String? = null
         var description: String? = null
@@ -63,11 +65,12 @@ class NewsXmlParser {
                 "title" -> title = readTextOfTag("title", parser)
                 "description" -> {
                     val text = readTextOfTag("description", parser)
-                    val values = Regex("<img src=\"(.*)\" />(.*)").find(text)?.groupValues ?: listOf<String>()
-                    if(values.size >= 2) {
+                    val values = Regex("<img src=\"(.*)\" />(.*)").find(text)?.groupValues
+                            ?: listOf<String>()
+                    if (values.size >= 2) {
                         image = values[1]
                     }
-                    if(values.size >= 3) {
+                    if (values.size >= 3) {
                         description = values[2]
                     }
                 }
@@ -79,7 +82,7 @@ class NewsXmlParser {
                 else -> skip(parser)
             }
         }
-        return NewsItem(id, title, description, link, image, pubDate, author, categories)
+        return if (id != null) NewsItem(id, title, description, link, image, pubDate, author, categories) else null
     }
 
     @Throws(IOException::class, XmlPullParserException::class)
@@ -93,7 +96,7 @@ class NewsXmlParser {
     @Throws(IOException::class, XmlPullParserException::class)
     private fun readDate(parser: XmlPullParser): Date? {
         val dateString = readTextOfTag("pubDate", parser)
-        val sdf = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z")
+        val sdf = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US)
         return sdf.parse(dateString)
     }
 

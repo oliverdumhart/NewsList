@@ -93,7 +93,11 @@ class DetailActivity : AppCompatActivity() {
     }
 
     fun openLink(url: String) {
-        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+        Intent(Intent.ACTION_VIEW, Uri.parse(url)).run {
+            if(resolveActivity(packageManager) != null){
+                startActivity(this)
+            }
+        }
     }
 
     fun showErrorMessage() {

@@ -46,7 +46,6 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         prefs = PreferenceManager.getDefaultSharedPreferences(this)
         url = prefs.getString(getString(R.string.settings_url_key), getString(R.string.settings_url_default))!!
         val showImages = prefs.getBoolean(getString(R.string.settings_display_images_key), resources.getBoolean(R.bool.pref_display_images_default))
-        viewModel.loadNews(url)
         viewModel.setShowImages(showImages)
         prefs.registerOnSharedPreferenceChangeListener(this)
 
@@ -75,7 +74,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.action_reload -> {
-            viewModel.loadNews(url)
+            viewModel.reloadNews(url)
             true
         }
         R.id.action_settings -> {
@@ -94,7 +93,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             getString(R.string.settings_url_key) -> {
                 sharedPreferences?.let {
                     url = it.getString(key, getString(R.string.settings_url_default))!!
-                    viewModel.loadNews(url)
+                    viewModel.reloadNews(url)
                 }
             }
             getString(R.string.settings_display_images_key) -> {

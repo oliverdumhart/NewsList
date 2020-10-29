@@ -1,29 +1,27 @@
 package com.oliverdumhart.moap.newslist.main
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.app.Application
+import androidx.lifecycle.*
+import com.oliverdumhart.moap.newslist.database.NewsRepository
 import com.oliverdumhart.moap.newslist.services.NewsApiService
 import com.oliverdumhart.moap.newslist.entities.NewsItem
 import kotlinx.coroutines.launch
 
-class MainViewModel: ViewModel() {
+class MainViewModel(application: Application): AndroidViewModel(application) {
 
-    private val _newsList = MutableLiveData<List<NewsItem>>()
+    private val repository = NewsRepository(application)
 
-    val newsList: LiveData<List<NewsItem>>
-        get() = _newsList
+    val newsList: LiveData<List<NewsItem>> = repository.newsList
 
     private val _showImages = MutableLiveData<Boolean>()
 
     val showImages: LiveData<Boolean>
             get() = _showImages
 
-    fun loadNews(url: String) {
+    fun reloadNews(url: String) {
         viewModelScope.launch {
             val result = NewsApiService.loadNews(url)
-            _newsList.postValue(result)
+            repository.updateNewsList(result)
         }
     }
 
