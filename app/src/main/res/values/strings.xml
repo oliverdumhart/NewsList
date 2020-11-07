@@ -17,4 +17,6 @@
     <string name="detail_extra_error">Opening the News Item failed!</string>
     <string name="detail_screen_name">Details</string>
     <string name="settings_screen_name">Settings</string>
+    <string name="general_error">An error occurred while loading the news.</string>
+    <string name="insert_error">An error occurred while caching the news.</string>
 </resources>

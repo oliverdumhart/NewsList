@@ -1,6 +1,7 @@
 package com.oliverdumhart.moap.newslist.main
 
 import android.app.Application
+import android.database.sqlite.SQLiteConstraintException
 import androidx.lifecycle.*
 import com.oliverdumhart.moap.newslist.database.NewsRepository
 import com.oliverdumhart.moap.newslist.services.NewsApiService
@@ -18,10 +19,22 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     val showImages: LiveData<Boolean>
             get() = _showImages
 
-    fun reloadNews(url: String) {
+    enum class Error{
+        General, Insert
+    }
+
+    fun reloadNews(url: String, callback: (error: Error) -> Unit) {
         viewModelScope.launch {
             val result = NewsApiService.loadNews(url)
-            repository.updateNewsList(result)
+            try {
+                repository.updateNewsList(result)
+            }
+            catch (ex: SQLiteConstraintException){
+                callback(Error.General)
+            }
+            catch (ex: Exception){
+                callback(Error.Insert)
+            }
         }
     }
 

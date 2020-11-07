@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
@@ -74,7 +75,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.action_reload -> {
-            viewModel.reloadNews(url)
+            viewModel.reloadNews(url, ::handleError)
             true
         }
         R.id.action_settings -> {
@@ -82,6 +83,13 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             true
         }
         else -> super.onOptionsItemSelected(item)
+    }
+
+    private fun handleError(error: MainViewModel.Error) = when (error) {
+        MainViewModel.Error.General ->
+            Toast.makeText(this, getString(R.string.general_error), Toast.LENGTH_SHORT).show()
+        MainViewModel.Error.Insert ->
+            Toast.makeText(this, getString(R.string.insert_error), Toast.LENGTH_SHORT).show()
     }
 
     fun showSettings() {
@@ -93,7 +101,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             getString(R.string.settings_url_key) -> {
                 sharedPreferences?.let {
                     url = it.getString(key, getString(R.string.settings_url_default))!!
-                    viewModel.reloadNews(url)
+                    viewModel.reloadNews(url, ::handleError)
                 }
             }
             getString(R.string.settings_display_images_key) -> {
