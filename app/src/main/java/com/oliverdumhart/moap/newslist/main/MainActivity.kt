@@ -20,6 +20,7 @@ import com.oliverdumhart.moap.newslist.detail.DetailActivity
 import com.oliverdumhart.moap.newslist.detail.DetailActivity.Companion.EXTRA_TRANSITION_NAME
 import com.oliverdumhart.moap.newslist.entities.NewsItem
 import com.oliverdumhart.moap.newslist.settings.SettingsActivity
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
     private val viewModel: MainViewModel by viewModels()
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         })
 
         NotificationUtils.setupNotificationChannel(this)
+        Timber.plant(Timber.DebugTree())
         findViewById<RecyclerView>(R.id.recycler_view).apply {
             setHasFixedSize(true)
             this.adapter = this@MainActivity.adapter
