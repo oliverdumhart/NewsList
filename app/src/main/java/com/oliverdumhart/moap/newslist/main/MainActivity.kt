@@ -14,13 +14,19 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.Data
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.oliverdumhart.moap.newslist.NotificationUtils
 import com.oliverdumhart.moap.newslist.R
 import com.oliverdumhart.moap.newslist.detail.DetailActivity
 import com.oliverdumhart.moap.newslist.detail.DetailActivity.Companion.EXTRA_TRANSITION_NAME
 import com.oliverdumhart.moap.newslist.entities.NewsItem
+import com.oliverdumhart.moap.newslist.services.NewsWorkScheduler
 import com.oliverdumhart.moap.newslist.settings.SettingsActivity
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
     private val viewModel: MainViewModel by viewModels()
@@ -48,6 +54,12 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             }
         }
 
+        viewModel.recentNews.observe(this) { news ->
+            news.forEach {
+                NotificationUtils.createNotification(this, it)
+            }
+        }
+
         prefs = PreferenceManager.getDefaultSharedPreferences(this)
         url = prefs.getString(getString(R.string.settings_url_key), getString(R.string.settings_url_default))!!
         val showImages = prefs.getBoolean(getString(R.string.settings_display_images_key), resources.getBoolean(R.bool.pref_display_images_default))
@@ -57,6 +69,18 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         viewModel.showImages.observe(this, {
             adapter.showImages = it
         })
+        val periodicWorkRequest = PeriodicWorkRequestBuilder<NewsWorkScheduler>(
+                30,
+                TimeUnit.MINUTES
+        ).setInitialDelay(30, TimeUnit.MINUTES)
+                .setInputData(Data.Builder().putString(NewsWorkScheduler.URL_EXTRA, url).build())
+                .build()
+
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+                NewsWorkScheduler.WORK_NAME,
+                ExistingPeriodicWorkPolicy.REPLACE,
+                periodicWorkRequest
+        )
     }
 
     private fun showDetailActivity(item: NewsItem, imageView: ImageView) {

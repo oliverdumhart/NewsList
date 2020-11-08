@@ -13,6 +13,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     private val repository = NewsRepository(application)
 
     val newsList: LiveData<List<NewsItem>> = repository.newsList
+    val recentNews: LiveData<List<NewsItem>> = repository.recentNews
 
     private val _showImages = MutableLiveData<Boolean>()
 
