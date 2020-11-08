@@ -14,6 +14,7 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
+import com.oliverdumhart.moap.newslist.NotificationUtils
 import com.oliverdumhart.moap.newslist.R
 import com.oliverdumhart.moap.newslist.detail.DetailActivity
 import com.oliverdumhart.moap.newslist.detail.DetailActivity.Companion.EXTRA_TRANSITION_NAME
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             showDetailActivity(item, imageView)
         })
 
+        NotificationUtils.setupNotificationChannel(this)
         findViewById<RecyclerView>(R.id.recycler_view).apply {
             setHasFixedSize(true)
             this.adapter = this@MainActivity.adapter
