@@ -28,16 +28,6 @@ class NewsWorkScheduler(context: Context, params: WorkerParameters) : CoroutineW
             if (url != null) {
                 val news = NewsApiService.loadNews(url)
 
-                /*val news2 = news.toMutableList()
-
-                val c = Calendar.getInstance()
-                c.set(Calendar.DAY_OF_MONTH, 1)
-
-                val last_idx = news.indexOf(news.last())
-                val last = news[last_idx]
-                last.publicationDate = c.time
-                news2[last_idx] = last*/
-
                 try {
                     val repository = NewsRepository(applicationContext)
                     repository.updateNewsList(news)
