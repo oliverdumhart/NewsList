@@ -37,12 +37,15 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        Timber.plant(Timber.DebugTree())
+
+        NotificationUtils.setupNotificationChannel(this)
+
         adapter = NewsListAdapter(EXTRA_TRANSITION_NAME, NewsListAdapter.NewsItemClickListener { item, imageView ->
             showDetailActivity(item, imageView)
         })
 
-        NotificationUtils.setupNotificationChannel(this)
-        Timber.plant(Timber.DebugTree())
         findViewById<RecyclerView>(R.id.recycler_view).apply {
             setHasFixedSize(true)
             this.adapter = this@MainActivity.adapter
