@@ -31,10 +31,10 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
                 repository.updateNewsList(result)
             }
             catch (ex: SQLiteConstraintException){
-                callback(Error.General)
+                callback(Error.Insert)
             }
             catch (ex: Exception){
-                callback(Error.Insert)
+                callback(Error.General)
             }
         }
     }
