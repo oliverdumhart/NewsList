@@ -69,6 +69,13 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         viewModel.showImages.observe(this, {
             adapter.showImages = it
         })
+
+        viewModel.reloadNews(url, ::handleError)
+
+        startPeriodicNewsUpdate()
+    }
+
+    private fun startPeriodicNewsUpdate() {
         val periodicWorkRequest = PeriodicWorkRequestBuilder<NewsWorkScheduler>(
                 30,
                 TimeUnit.MINUTES
